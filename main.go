@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"reflect"
 )
 
 // MyError is a custom error class
@@ -11,8 +13,10 @@ func (o *MyError) Error() string { return "This is a mock error string" }
 
 func main() {
 	fmt.Printf("Error check for nil\n\n")
-	var err error
+	var err error 
 
+	fmt.Printf("%#v\n\n", reflect.ValueOf(errors.New("xx")))
+	
 	// baseline tests for basic errors
 
 	trialReport("uninitialized err == nil", true, err == nil)
@@ -129,9 +133,6 @@ func GetErrorPtrToNilFixed2() error {
 // explicitly return a `nil` value, but because the return type is `*MyError`, it gets coerced
 // to a pointer-to-nil anyway
 func GetErrorPtrToNilNotFixed() *MyError {
-	if false { // never executes
-		return &MyError{}
-	}
 	return nil
 }
 
