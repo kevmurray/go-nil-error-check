@@ -10,7 +10,7 @@ if err != nil {
 }
 ```
 
-And to our surprise, the code paniced even though we were returning nil from the `doAThing`
+And to our surprise, the code paniced even though we were returning `nil` from the `doAThing`
 function.
 
 After reading [this
@@ -95,6 +95,22 @@ if err != nil &&
   ... an error occurred
 }
 ```
+
+If you know for a fact that the only custom error type that `doAThing()` can return is `*MyError`
+then you can also test with 
+
+```golang
+result, err := thing.doAThing()
+if err == nil || err == (*MyError)(nil) {
+  ... no error occurred
+}
+if err != nil && err != (*MyError)(nil {
+  .. an error occurred
+}
+```
+
+This is risky because if `doAThing()` starts returning a different type of custom 
+error (like `*AltError`), this test will not work until you add that type to the check too.
 
 Obviously the first options is better, and can be summed up by just following the Go standard
 practices and not doing anything weird - if you have an error, just return an `error` type,
