@@ -1,6 +1,6 @@
 # go-nil-error-check
 
-We recently encountered a problem where we were checking for no errors with the standard Go
+We recently encountered a problem where we were checking for errors with the standard Go
 check like
 
 ```golang
